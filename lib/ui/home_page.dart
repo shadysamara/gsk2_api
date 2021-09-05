@@ -13,9 +13,9 @@ class HomePage extends StatelessWidget {
       body: Center(
         child: RaisedButton(
           onPressed: () async {
-            List<ProductResponse> products =
-                await ApiHelper.apiHelper.getCategoryProducts('jewelery');
-            print(products);
+            ProductResponse product =
+                await ApiHelper.apiHelper.getSpecificProduct(1);
+            print(product.toJson());
           },
         ),
       ),

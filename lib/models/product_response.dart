@@ -44,13 +44,13 @@ class ProductResponse {
 
 class Rating {
   num rate;
-  int count;
+  String count;
 
   Rating({this.rate, this.count});
 
   Rating.fromJson(Map<String, dynamic> json) {
     rate = json['rate'];
-    count = json['count'];
+    count = json['count'].toString();
   }
 
   Map<String, dynamic> toJson() {
