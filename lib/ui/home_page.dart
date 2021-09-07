@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:api/data/api_helper.dart';
 import 'package:api/models/product_response.dart';
 import 'package:api/providers/myprovider.dart';
+import 'package:api/ui/product_details.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
@@ -108,32 +109,45 @@ class HomePage extends StatelessWidget {
                                         mainAxisSpacing: 10),
                                 itemCount: provider.categoryProducts.length,
                                 itemBuilder: (context, index) {
-                                  return Container(
-                                    padding: EdgeInsets.all(5),
-                                    color: Colors.white,
-                                    child: Column(
-                                      children: [
-                                        Expanded(
-                                          flex: 2,
-                                          child: CachedNetworkImage(
-                                            imageUrl: provider
-                                                .categoryProducts[index].image,
+                                  return GestureDetector(
+                                    onTap: () {
+                                      provider.getSpecificProduct(
+                                          provider.categoryProducts[index].id);
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(builder: (context) {
+                                        return ProductDetails();
+                                      }));
+                                    },
+                                    child: Container(
+                                      padding: EdgeInsets.all(5),
+                                      color: Colors.white,
+                                      child: Column(
+                                        children: [
+                                          Expanded(
+                                            flex: 2,
+                                            child: CachedNetworkImage(
+                                              imageUrl: provider
+                                                  .categoryProducts[index]
+                                                  .image,
+                                            ),
                                           ),
-                                        ),
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(provider
-                                                .categoryProducts[index].title),
-                                            Text('Price: ' +
-                                                provider.categoryProducts[index]
-                                                    .price
-                                                    .toString() +
-                                                '\$'),
-                                          ],
-                                        ),
-                                      ],
+                                          Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(provider
+                                                  .categoryProducts[index]
+                                                  .title),
+                                              Text('Price: ' +
+                                                  provider
+                                                      .categoryProducts[index]
+                                                      .price
+                                                      .toString() +
+                                                  '\$'),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   );
                                 }),

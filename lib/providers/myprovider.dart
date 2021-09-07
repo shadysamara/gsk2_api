@@ -33,8 +33,12 @@ class HomeProvider extends ChangeNotifier {
   }
 
   getSpecificProduct(int id) async {
+    selectedProduct = null;
+    notifyListeners();
     dynamic response = await ApiHelper.apiHelper.getSpecificProduct(id);
     selectedProduct = ProductResponse.fromJson(response);
     notifyListeners();
   }
 }
+// cart
+// favourite
