@@ -7,13 +7,18 @@ class HomeProvider extends ChangeNotifier {
   List<ProductResponse> allProducts;
   List<ProductResponse> categoryProducts;
   ProductResponse selectedProduct;
+  String selectedCategory = '';
   getAllCategories() async {
     List<dynamic> categories = await ApiHelper.apiHelper.getAllCategories();
     allCategories = categories.map((e) => e.toString()).toList();
     notifyListeners();
+    getCategoryProducts(allCategories.first);
   }
 
   getCategoryProducts(String category) async {
+    categoryProducts = null;
+    this.selectedCategory = category;
+    notifyListeners();
     List<dynamic> products =
         await ApiHelper.apiHelper.getCategoryProducts(category);
     categoryProducts =
