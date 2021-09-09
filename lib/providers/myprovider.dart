@@ -45,12 +45,39 @@ class HomeProvider extends ChangeNotifier {
   }
 
   addToCart(ProductResponse productResponse) async {
-    await DbHelper.dbHelper.addProductToCart(productResponse);
+    bool productInCart = cartProducts.any((x) {
+      return x.id == productResponse.id;
+    });
+
+    if (productInCart) {
+      productResponse.quantity = cartProducts
+          .where((element) => element.id == productResponse.id)
+          .first
+          .quantity;
+      await DbHelper.dbHelper.updateProductQuantity(productResponse);
+    } else {
+      await DbHelper.dbHelper.addProductToCart(productResponse);
+    }
+
+    getAllCartProdcts();
+  }
+
+  updateProductInCart(ProductResponse productResponse) async {
+    await DbHelper.dbHelper.updateProductQuantity(productResponse);
     getAllCartProdcts();
   }
 
   addToFavourite(ProductResponse productResponse) async {
-    await DbHelper.dbHelper.addProductToFavourite(productResponse);
+    bool productInFavourite = favouriteProducts.any((x) {
+      return x.id == productResponse.id;
+    });
+
+    if (productInFavourite) {
+      deleteFromFavourite(productResponse.id);
+    } else {
+      await DbHelper.dbHelper.addProductToFavourite(productResponse);
+    }
+
     getAllFavouriteProdcts();
   }
 
@@ -67,6 +94,9 @@ class HomeProvider extends ChangeNotifier {
   getAllCartProdcts() async {
     List<ProductResponse> products = await DbHelper.dbHelper.getAllCart();
     this.cartProducts = products;
+    cartProducts.forEach((element) {
+      print(element.quantity);
+    });
     notifyListeners();
   }
 

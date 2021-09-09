@@ -18,7 +18,7 @@ class DbHelper {
     Database database =
         await openDatabase(path, version: 1, onCreate: (db, version) {
       db.execute(
-          '''CREATE TABLE Cart (id INTEGER PRIMARY KEY, title TEXT, price REAL, description TEXT,category TEXT,image TEXT)''');
+          '''CREATE TABLE Cart (id INTEGER PRIMARY KEY, title TEXT, price REAL, description TEXT,category TEXT,image TEXT,quantity INTEGER)''');
       db.execute(
           '''CREATE TABLE Favourite (id INTEGER PRIMARY KEY, title TEXT, price REAL, description TEXT,category TEXT,image TEXT)''');
     });
@@ -37,6 +37,7 @@ class DbHelper {
 
   Future<List<ProductResponse>> getAllCart() async {
     List<Map<String, Object>> list = await database.query('Cart');
+
     return list.map((e) => ProductResponse.fromJson(e)).toList();
   }
 
@@ -47,6 +48,15 @@ class DbHelper {
 
   deleteProductFromCart(int id) async {
     database.delete('Cart', where: 'id=?', whereArgs: [id]);
+  }
+
+  updateProductQuantity(ProductResponse productResponse) async {
+    // productResponse.quantity = productResponse.quantity++;
+
+    productResponse.quantity = ++productResponse.quantity;
+
+    database.update('Cart', productResponse.todBJson(),
+        where: 'id=?', whereArgs: [productResponse.id]);
   }
 
   deleteProductFromFavourite(int id) async {

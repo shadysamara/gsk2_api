@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:api/data/api_helper.dart';
 import 'package:api/models/product_response.dart';
 import 'package:api/providers/myprovider.dart';
+import 'package:api/ui/cart.dart';
 import 'package:api/ui/favourite_products.dart';
 import 'package:api/ui/product_details.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -25,6 +26,14 @@ class HomePage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return FavouriteProducts();
+                }));
+              },
+            ),
+            IconButton(
+              icon: Icon(Icons.shopping_bag),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return CartPage();
                 }));
               },
             )
@@ -166,8 +175,20 @@ class HomePage extends StatelessWidget {
                                                             provider.categoryProducts[
                                                                 index]);
                                                       },
-                                                      icon:
-                                                          Icon(Icons.favorite))
+                                                      icon: Icon(
+                                                        Icons.favorite,
+                                                        color: provider
+                                                                    .favouriteProducts
+                                                                    ?.any((element) =>
+                                                                        element
+                                                                            .id ==
+                                                                        provider
+                                                                            .categoryProducts[index]
+                                                                            .id) ??
+                                                                false
+                                                            ? Colors.red
+                                                            : Colors.black,
+                                                      ))
                                                 ],
                                               ),
                                             ],

@@ -6,6 +6,7 @@ class ProductResponse {
   String category;
   String image;
   Rating rating;
+  int quantity;
 
   ProductResponse(
       {this.id,
@@ -17,12 +18,14 @@ class ProductResponse {
       this.rating});
 
   ProductResponse.fromJson(Map<String, dynamic> json) {
+    print(json['quantity']);
     id = json['id'];
     title = json['title'];
     price = json['price'];
     description = json['description'];
     category = json['category'];
     image = json['image'];
+    quantity = json['quantity'];
     rating =
         json['rating'] != null ? new Rating.fromJson(json['rating']) : null;
   }
@@ -49,6 +52,7 @@ class ProductResponse {
     data['description'] = this.description;
     data['category'] = this.category;
     data['image'] = this.image;
+    data['quantity'] = quantity ?? 1;
 
     return data;
   }

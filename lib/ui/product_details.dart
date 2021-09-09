@@ -64,21 +64,26 @@ class ProductDetails extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Container(
-                          margin: EdgeInsets.all(10),
-                          alignment: Alignment.center,
-                          padding: EdgeInsets.symmetric(vertical: 15),
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(15),
-                              color: Colors.blueAccent),
-                          width: double.infinity,
-                          child: Text(
-                            'Add To Cart',
-                            style: TextStyle(
-                                fontSize: 20,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w800),
-                          ))
+                      GestureDetector(
+                        onTap: () {
+                          provider.addToCart(provider.selectedProduct);
+                        },
+                        child: Container(
+                            margin: EdgeInsets.all(10),
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.symmetric(vertical: 15),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: Colors.blueAccent),
+                            width: double.infinity,
+                            child: Text(
+                              'Add To Cart',
+                              style: TextStyle(
+                                  fontSize: 20,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w800),
+                            )),
+                      )
                     ],
                   ),
                 );
