@@ -40,6 +40,18 @@ class ProductResponse {
     }
     return data;
   }
+
+  Map<String, dynamic> todBJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['title'] = this.title;
+    data['price'] = this.price;
+    data['description'] = this.description;
+    data['category'] = this.category;
+    data['image'] = this.image;
+
+    return data;
+  }
 }
 
 class Rating {

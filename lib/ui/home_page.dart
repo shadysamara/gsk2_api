@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:api/data/api_helper.dart';
 import 'package:api/models/product_response.dart';
 import 'package:api/providers/myprovider.dart';
+import 'package:api/ui/favourite_products.dart';
 import 'package:api/ui/product_details.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
@@ -14,9 +15,20 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     // TODO: implement build
     return Scaffold(
+        // bottomNavigationBar: BottomNavigationBar,
         backgroundColor: Colors.grey[300],
         appBar: AppBar(
           title: Text('Home Page'),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.favorite),
+              onPressed: () {
+                Navigator.push(context, MaterialPageRoute(builder: (context) {
+                  return FavouriteProducts();
+                }));
+              },
+            )
+          ],
         ),
         body: Consumer<HomeProvider>(
           builder: (context, provider, x) {
@@ -138,12 +150,26 @@ class HomePage extends StatelessWidget {
                                               Text(provider
                                                   .categoryProducts[index]
                                                   .title),
-                                              Text('Price: ' +
-                                                  provider
-                                                      .categoryProducts[index]
-                                                      .price
-                                                      .toString() +
-                                                  '\$'),
+                                              Row(
+                                                children: [
+                                                  Text('Price: ' +
+                                                      provider
+                                                          .categoryProducts[
+                                                              index]
+                                                          .price
+                                                          .toString() +
+                                                      '\$'),
+                                                  Spacer(),
+                                                  IconButton(
+                                                      onPressed: () {
+                                                        provider.addToFavourite(
+                                                            provider.categoryProducts[
+                                                                index]);
+                                                      },
+                                                      icon:
+                                                          Icon(Icons.favorite))
+                                                ],
+                                              ),
                                             ],
                                           ),
                                         ],
