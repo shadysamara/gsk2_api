@@ -31,7 +31,9 @@ class DbHelper {
   }
 
   addProductToFavourite(ProductResponse productResponse) async {
-    int x = await database.insert('Favourite', productResponse.todBJson());
+    Map map = productResponse.todBJson();
+    map.remove('quantity');
+    int x = await database.insert('Favourite', map);
     print(x);
   }
 

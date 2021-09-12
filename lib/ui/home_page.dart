@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:api/data/api_helper.dart';
+import 'package:api/data/sp_helper.dart';
 import 'package:api/models/product_response.dart';
 import 'package:api/providers/myprovider.dart';
 import 'package:api/ui/cart.dart';
@@ -32,6 +33,8 @@ class HomePage extends StatelessWidget {
             IconButton(
               icon: Icon(Icons.shopping_bag),
               onPressed: () {
+                // Provider.of<HomeProvider>(context, listen: false)
+                //     .getFavourite();
                 Navigator.push(context, MaterialPageRoute(builder: (context) {
                   return CartPage();
                 }));

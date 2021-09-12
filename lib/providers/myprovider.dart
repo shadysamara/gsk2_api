@@ -45,9 +45,11 @@ class HomeProvider extends ChangeNotifier {
   }
 
   addToCart(ProductResponse productResponse) async {
-    bool productInCart = cartProducts.any((x) {
-      return x.id == productResponse.id;
-    });
+    bool productInCart = cartProducts == null
+        ? false
+        : cartProducts.any((x) {
+            return x.id == productResponse.id;
+          });
 
     if (productInCart) {
       productResponse.quantity = cartProducts
@@ -68,9 +70,11 @@ class HomeProvider extends ChangeNotifier {
   }
 
   addToFavourite(ProductResponse productResponse) async {
-    bool productInFavourite = favouriteProducts.any((x) {
-      return x.id == productResponse.id;
-    });
+    bool productInFavourite = favouriteProducts == null
+        ? false
+        : favouriteProducts.any((x) {
+            return x.id == productResponse.id;
+          });
 
     if (productInFavourite) {
       deleteFromFavourite(productResponse.id);
@@ -104,6 +108,21 @@ class HomeProvider extends ChangeNotifier {
     List<ProductResponse> products = await DbHelper.dbHelper.getAllFavourite();
     this.favouriteProducts = products;
     notifyListeners();
+  }
+
+  login(String email, String password, String fcmToken) async {
+    print(email);
+    print(password);
+    print(fcmToken);
+    await ApiHelper.apiHelper.login(email, password, fcmToken);
+  }
+
+  addOrRemoveFromFavourite(int id) async {
+    await ApiHelper.apiHelper.addOrRemoveFromFavourite(id);
+  }
+
+  getFavourite() async {
+    await ApiHelper.apiHelper.getFavourite();
   }
 }
 // cart
